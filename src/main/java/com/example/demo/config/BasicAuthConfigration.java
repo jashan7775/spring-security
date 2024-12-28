@@ -18,6 +18,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+// basic auth configuration
 public class BasicAuthConfigration{
 	
 	// by default spring security provides form based authentication 
