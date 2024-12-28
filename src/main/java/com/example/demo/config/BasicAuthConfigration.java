@@ -2,8 +2,10 @@ package com.example.demo.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -16,14 +18,29 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class BasicAuthConfigration{
 	
 	// by default spring security provides form based authentication 
 	// below code is to configure form based authentication
+	
+	// there is one more alternative to define role - go to method where we want to and write @PreAuthorize("hasRole('ADMIN')") above that method
 	@Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .authorizeRequests().requestMatchers("/home").permitAll()
+            .authorizeRequests()
+            
+            // .requestMatchers("/public/**") // -> url started with /public will not be asked for username and password
+            .requestMatchers("/public/home")
+                        
+            // role - high level view
+            // permission - like read, write, delete..
+            .hasRole("ADMIN")
+            
+            //.permitAll() // -> grant access to all users
+            
+            .requestMatchers("/api/**").hasRole("USER")
+            
             .anyRequest()
             .authenticated()
             .and()
