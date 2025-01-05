@@ -10,4 +10,6 @@ public interface UserService {
 
 	public List<UserEntity> getUserByName(String userName);
 
+	public UserEntity createUser(UserEntity entity);
+
 }

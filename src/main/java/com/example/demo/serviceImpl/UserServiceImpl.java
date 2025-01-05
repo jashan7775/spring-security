@@ -36,4 +36,11 @@ public class UserServiceImpl implements UserService {
 		return filteredList;
 	}
 
+	@Override
+	public UserEntity createUser(UserEntity entity) {
+		UserEntity newUser = new UserEntity(entity.getUserName(), entity.getPassword(), entity.getEmail());
+		userList.add(newUser);
+		return newUser;
+	}
+
 }

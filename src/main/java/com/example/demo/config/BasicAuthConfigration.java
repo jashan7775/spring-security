@@ -14,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 @Configuration
 @EnableWebSecurity
@@ -28,8 +29,11 @@ public class BasicAuthConfigration{
 	@Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+        	//.csrf().disable() // if our client is not browser then we had to disable this
+        	.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()) // if we dont disable csrf then we can manually get token and pass to post request
+        	.and()
             .authorizeRequests()
-            
+            .requestMatchers("/signin").permitAll()
             // .requestMatchers("/public/**") // -> url started with /public will not be asked for username and password
             .requestMatchers("/public/home")
                         
@@ -44,7 +48,14 @@ public class BasicAuthConfigration{
             .anyRequest()
             .authenticated()
             .and()
-            .httpBasic();
+            //.httpBasic()
+            
+            // FORM BASED AUTHENTICATION :
+            .formLogin() // if we want form based authentication
+            .loginPage("/signin") // if we want to change url from login to signin (if we do this we need to construct the signin page)
+            .loginProcessingUrl("/dologin") // tells what action had to perform on hiting url (dologin this defines in login.html page)
+            .defaultSuccessUrl("/api/get-all-users") // tells on which page we fall after log in
+            ;
         return http.build();
     }
 	
