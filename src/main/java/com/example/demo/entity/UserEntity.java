@@ -17,6 +17,10 @@ public class UserEntity {
 	private String password;
 	private String email;
 	private String role;
+	
+	public UserEntity() {
+		
+	} 
 
 	public UserEntity(String userName, String password, String email) {
 		super();
