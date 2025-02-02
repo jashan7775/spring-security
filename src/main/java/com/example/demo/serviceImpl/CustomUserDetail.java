@@ -5,8 +5,6 @@ import java.util.HashSet;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Service;
-
 import com.example.demo.entity.UserEntity;
 
 // spring security puts user details in UserDetail interface we had to implement that interface
@@ -14,7 +12,7 @@ import com.example.demo.entity.UserEntity;
 public class CustomUserDetail implements UserDetails {
 
 	private UserEntity user;
-	
+
 	public CustomUserDetail(UserEntity user) {
 		this.user = user;
 	}

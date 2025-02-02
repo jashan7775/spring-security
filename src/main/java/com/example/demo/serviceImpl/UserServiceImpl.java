@@ -2,12 +2,9 @@ package com.example.demo.serviceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import com.example.demo.entity.UserEntity;
 import com.example.demo.repo.UserRepo;
 import com.example.demo.service.UserService;

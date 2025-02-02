@@ -11,10 +11,10 @@ import com.example.demo.repo.UserRepo;
 
 @SpringBootApplication
 public class SpringSecurityApplication implements CommandLineRunner {
-	
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
+
 	@Autowired
 	private UserRepo userRepo;
 
@@ -22,6 +22,7 @@ public class SpringSecurityApplication implements CommandLineRunner {
 		SpringApplication.run(SpringSecurityApplication.class, args);
 	}
 
+	// this will done to create user at run time to save in database
 	@Override
 	public void run(String... args) throws Exception {
 //		UserEntity userOne = new UserEntity();
