@@ -1,8 +1,11 @@
 package com.example.demo.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,12 +18,19 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import com.example.demo.serviceImpl.CustomUserDetailService;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 // basic auth configuration
 public class BasicAuthConfigration{
+	
+	@Autowired
+	private CustomUserDetailService customUserDetailService;
+	
+	@Autowired
+	private PasswordEncoderConfig passwordEncoderConfig;
 	
 	// by default spring security provides form based authentication 
 	// below code is to configure form based authentication
@@ -79,15 +89,15 @@ public class BasicAuthConfigration{
 	        return new InMemoryUserDetailsManager(user1, admin);
 	   }
 
-	   @Bean
-	   public PasswordEncoder passwordEncoder() {
-		   // here we pass the strength by default it is ten
-		    int srength = 12;
-	        return new BCryptPasswordEncoder(srength); // Use BCrypt for encoding passwords
-	   }
+	   
 
 	   @Bean
 	   public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
 	        return authenticationConfiguration.getAuthenticationManager();
+	   }
+	   
+	   @Autowired
+	   public void configure(AuthenticationManagerBuilder auth) throws Exception{
+		   auth.userDetailsService(customUserDetailService).passwordEncoder(passwordEncoderConfig.passwordEncoder());
 	   }
 }

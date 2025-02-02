@@ -24,19 +24,19 @@ public class SpringSecurityApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		UserEntity userOne = new UserEntity();
-		userOne.setUserName("jashan");
-		userOne.setPassword(passwordEncoder.encode("jashan@2001"));
-		userOne.setEmail("jashan@gmail.com");
-		userOne.setRole("ADMIN");
-		userRepo.save(userOne);
-		
-		UserEntity userTwo = new UserEntity();
-		userTwo.setUserName("harsh");
-		userTwo.setPassword(passwordEncoder.encode("harsh@2004"));
-		userTwo.setEmail("harsh@gmail.com");
-		userTwo.setRole("USER");
-		userRepo.save(userTwo);
+//		UserEntity userOne = new UserEntity();
+//		userOne.setUserName("jashan");
+//		userOne.setPassword(passwordEncoder.encode("jashan@2001"));
+//		userOne.setEmail("jashan@gmail.com");
+//		userOne.setRole("ADMIN");
+//		userRepo.save(userOne);
+//		
+//		UserEntity userTwo = new UserEntity();
+//		userTwo.setUserName("harsh");
+//		userTwo.setPassword(passwordEncoder.encode("harsh@2004"));
+//		userTwo.setEmail("harsh@gmail.com");
+//		userTwo.setRole("USER");
+//		userRepo.save(userTwo);
 
 	}
 
